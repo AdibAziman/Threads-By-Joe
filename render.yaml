@@ -1,0 +1,31 @@
+# Render blueprint. A persistent disk requires a paid web service plan.
+services:
+  - type: web
+    name: threads-by-joe
+    runtime: docker
+    plan: starter
+    healthCheckPath: /api/health
+    numInstances: 1
+    disk:
+      name: joe-data
+      mountPath: /data
+      sizeGB: 1
+    envVars:
+      - key: DATABASE_PATH
+        value: /data/threadsbyjoe.db
+      - key: APP_URL
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: TOKEN_ENC_KEY
+        sync: false
+      - key: THREADS_APP_ID
+        sync: false
+      - key: THREADS_APP_SECRET
+        sync: false
+      - key: DEEPSEEK_API_KEY
+        sync: false
+      - key: DRY_RUN
+        value: "1"
+      - key: CONTACT_EMAIL
+        sync: false

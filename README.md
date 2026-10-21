@@ -37,6 +37,22 @@ Note: `next dev` and `npm run worker` do not read `.env.local` the same way. Exp
 4. Set `DRY_RUN=0`, `APP_URL` to your https URL, a long random `SESSION_SECRET`, and a 32-byte `TOKEN_ENC_KEY`. Set `CONTACT_EMAIL`. Optionally `ALLOW_SIGNUP=0` to close sign-ups.
 5. Run `npm run build && npm start` and `npm run worker` as two long-lived processes on a host with a persistent disk (SQLite file at `DATABASE_PATH`). Back the file up.
 
+## Deploy (Railway, Fly.io or Render)
+
+The app needs a **persistent disk** (SQLite) and **one long-running process** for Joe's worker, so it does not fit serverless hosts such as Netlify or Vercel as-is. The `Dockerfile` runs the web app and the worker together in one container (`scripts/start.mjs`), with the database on a volume mounted at `/data`.
+
+**Run exactly one instance.** SQLite and the in-process scheduler are not safe to scale out. Back up the volume.
+
+| Host | How |
+| --- | --- |
+| Railway | New project from the GitHub repo (`railway.json` is picked up). Add a volume mounted at `/data`, set the env vars below. |
+| Fly.io | `fly launch --no-deploy` (keep `fly.toml`), `fly volumes create joe_data --size 1`, `fly secrets set ...`, `fly deploy`. |
+| Render | New Blueprint from the repo (`render.yaml`). A persistent disk needs a paid plan. |
+
+Env vars to set on the host: `APP_URL` (your https URL, also used for the Meta redirect URI), `SESSION_SECRET`, `TOKEN_ENC_KEY`, `DEEPSEEK_API_KEY`, `THREADS_APP_ID`, `THREADS_APP_SECRET`, `CONTACT_EMAIL`, and optionally the Stripe vars. Keep `DRY_RUN=1` until you have tested with your own account. Health check path: `/api/health`.
+
+Not yet tested: the Docker image build and the three host configs (no Docker daemon was available where this was written). The start script itself, the health endpoint and graceful shutdown were tested locally.
+
 ## Safety model
 
 - Every draft passes hard checks (500-char limit, banned terms, link allowlist and 5-link limit, near-duplicate detection, AI-boilerplate detection, no email/phone in replies). Failing drafts are never sent; a failed reply draft is parked for a human with the reasons.
