@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { currentUser } from "../lib/auth";
-import { PLANS, TRIAL_DAYS, type PlanId } from "../lib/plans";
+import { TRIAL_DAYS } from "../lib/plans";
+import { PricingSection } from "./components/PricingSection";
 
 export default async function Landing() {
   const user = await currentUser();
@@ -85,22 +86,9 @@ export default async function Landing() {
 
         <section className="section" id="pricing">
           <p className="label">Pricing</p>
-          <h2>Simple monthly plans</h2>
-          <p className="muted" style={{ marginBottom: 24 }}>Every plan starts with a {TRIAL_DAYS}-day trial. Cancel any time.</p>
-          <div className="grid grid-3">
-            {(["creator", "pro", "agency"] as PlanId[]).map((id) => {
-              const p = PLANS[id];
-              return (
-                <div key={id} className={`card plan ${id === "pro" ? "featured" : ""}`}>
-                  <div className="spread"><h3>{p.name}</h3>{id === "pro" && <span className="badge ok">Most popular</span>}</div>
-                  <div className="price">${p.priceUsd}<span className="muted small" style={{ fontWeight: 400 }}> / month</span></div>
-                  <p className="muted small">{p.blurb}</p>
-                  <ul>{p.features.map((f) => <li key={f}>{f}</li>)}</ul>
-                  <Link className={`btn ${id === "pro" ? "btn-primary" : ""}`} href={cta.href} style={{ justifyContent: "center", marginTop: "auto" }}>{cta.label}</Link>
-                </div>
-              );
-            })}
-          </div>
+          <h2>Transparent, predictable plans</h2>
+          <p className="muted" style={{ marginBottom: 24 }}>Every plan starts with a {TRIAL_DAYS}-day trial. No surprise charges. Cancel any time.</p>
+          <PricingSection mode="marketing" cta={cta} />
         </section>
 
         <section className="section">

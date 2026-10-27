@@ -1,10 +1,11 @@
 import { requireUser } from "../../../lib/auth";
 import { env } from "../../../lib/env";
-import { PLANS, type PlanId } from "../../../lib/plans";
+import { isPlanId } from "../../../lib/plans";
 import { effectivePlan, listAccounts, monthlyUsage } from "../../../lib/store";
 import { checkoutAction, portalAction } from "../../actions";
 import { Flash, flashFrom, type SP } from "../../components/Flash";
 import { PageHead } from "../../components/ui";
+import { PricingSection } from "../../components/PricingSection";
 
 export const metadata = { title: "Billing" };
 export const dynamic = "force-dynamic";
@@ -36,24 +37,13 @@ export default async function Billing({ searchParams }: { searchParams: SP }) {
         </div>
       )}
 
-      <div className="grid grid-3">
-        {(["creator", "pro", "agency"] as PlanId[]).map((id) => {
-          const p = PLANS[id];
-          const current = paid && user.plan === id;
-          return (
-            <section key={id} className={`card plan ${id === "pro" ? "featured" : ""}`}>
-              <div className="spread"><h2>{p.name}</h2>{current && <span className="badge ok">Current</span>}</div>
-              <div className="price">${p.priceUsd}<span className="muted small" style={{ fontWeight: 400 }}> / month</span></div>
-              <p className="muted small">{p.blurb}</p>
-              <ul>{p.features.map((f) => <li key={f}>{f}</li>)}</ul>
-              <form action={checkoutAction} style={{ marginTop: "auto" }}>
-                <input type="hidden" name="plan" value={id} />
-                <button className={`btn ${id === "pro" ? "btn-primary" : ""}`} type="submit" disabled={!env.billingEnabled || current} style={{ width: "100%", justifyContent: "center" }}>{current ? "Your plan" : paid ? "Switch to " + p.name : "Choose " + p.name}</button>
-              </form>
-            </section>
-          );
-        })}
-      </div>
+      <PricingSection
+        mode="billing"
+        currentPlanId={isPlanId(user.plan) ? user.plan : undefined}
+        paid={paid}
+        billingEnabled={env.billingEnabled}
+        checkoutAction={checkoutAction}
+      />
     </>
   );
 }

@@ -229,3 +229,46 @@ textarea { resize: vertical; min-height: 84px; line-height: 1.45; }
 .auth-wrap { min-height: 100vh; display: grid; place-items: center; padding: 24px; }
 .auth-card { width: 100%; max-width: 400px; padding: 28px; }
 .footer { border-top: 1px solid var(--line); padding: 28px 0 40px; color: var(--ink-3); font-size: 13px; }
+
+/* ---------- modern pricing & currency styles ---------- */
+.pricing-wrapper { margin-top: 16px; }
+.pricing-toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 28px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+.billing-cadence-toggle { display: inline-flex; align-items: center; background: var(--surface-2); border: 1px solid var(--line); border-radius: 999px; padding: 3px; gap: 2px; }
+.cadence-btn { appearance: none; background: transparent; border: 0; color: var(--ink-2); font-size: 13px; font-weight: 600; padding: 6px 14px; border-radius: 999px; cursor: pointer; transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease; display: inline-flex; align-items: center; }
+.cadence-btn:hover { color: var(--ink); }
+.cadence-btn.active { background: var(--surface); color: var(--ink); box-shadow: 0 1px 3px rgba(22, 24, 26, 0.08); }
+.discount-chip { background: var(--accent-soft); color: var(--accent); font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 999px; margin-left: 6px; }
+.currency-selector-wrap { display: flex; align-items: center; gap: 8px; }
+.currency-label { font-size: 13px; font-weight: 500; color: var(--ink-3); }
+.select-container { position: relative; display: inline-block; }
+.currency-select { appearance: none; -webkit-appearance: none; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); color: var(--ink); font-size: 13px; font-weight: 500; padding: 6px 30px 6px 12px; cursor: pointer; outline: none; transition: border-color 0.15s ease, box-shadow 0.15s ease; }
+.currency-select:hover { border-color: var(--line-strong); }
+.currency-select:focus { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-soft); }
+.select-arrow { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--ink-3); font-size: 10px; }
+.pricing-grid { align-items: stretch; }
+.plan-card { display: flex; flex-direction: column; padding: 28px 24px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); position: relative; transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease; }
+.plan-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(22, 24, 26, 0.07); }
+.plan-card.featured { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 8px 24px rgba(31, 92, 74, 0.10); }
+.featured-banner { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); background: var(--accent); color: var(--accent-ink); font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 3px 12px; border-radius: 999px; white-space: nowrap; }
+.plan-header { margin-bottom: 12px; }
+.plan-name { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; margin: 0; }
+.plan-blurb { font-size: 13px; color: var(--ink-2); margin-top: 4px; line-height: 1.4; min-height: 36px; }
+.plan-price-box { margin: 8px 0 16px; }
+.price-display { display: flex; align-items: baseline; gap: 6px; }
+.price-val { font-size: 38px; font-weight: 800; letter-spacing: -0.03em; color: var(--ink); }
+.price-period { font-size: 13.5px; color: var(--ink-3); font-weight: 500; }
+.price-subtext { font-size: 12px; color: var(--ink-3); min-height: 18px; margin-top: 2px; }
+.annual-billed { color: var(--accent); font-weight: 600; }
+.plan-features-divider { height: 1px; background: var(--line); margin: 14px 0 16px; }
+.plan-features { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; flex-grow: 1; }
+.feature-item { display: flex; align-items: flex-start; gap: 10px; font-size: 13.5px; line-height: 1.4; color: var(--ink-2); }
+.feature-icon { width: 16px; height: 16px; color: var(--accent); flex-shrink: 0; margin-top: 2px; }
+.plan-cta-box { margin-top: 24px; }
+.plan-btn { width: 100%; justify-content: center; padding: 10px 16px; font-weight: 600; font-size: 13.5px; }
+.pricing-disclaimer { text-align: center; font-size: 12px; color: var(--ink-3); margin-top: 28px; line-height: 1.5; }
+@media (max-width: 760px) {
+  .pricing-toolbar { flex-direction: column; align-items: stretch; }
+  .billing-cadence-toggle { justify-content: center; width: 100%; }
+  .currency-selector-wrap { justify-content: space-between; width: 100%; }
+  .currency-select { width: 100%; }
+}

@@ -6,12 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "worker": "tsx worker/index.ts",
+    "worker": "tsx --env-file-if-exists=.env.local worker/index.ts",
     "test": "vitest run",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "better-sqlite3": "^11.5.0",
+    "better-sqlite3": "12.11.1",
     "next": "^16.4.2",
     "react": "19.0.0",
     "react-dom": "19.0.0",
